@@ -9,14 +9,14 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type){
         case START_FETCHING:
-            console.log('Fetching', action)
+            // console.log('Fetching', action)
             return{
                 ...state,
                 isFetching: true,
                 error: ''
             }
         case FETCH_SUCCESS:
-            console.log('fetch success', action)
+            // console.log('fetch success', action)
             return{
                 ...state,
                 isFetching: false,
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
                 barFacts: action.payload
             }
         case FETCH_FAILURE:
-            console.log('fetch failure', action)
+            // console.log('fetch failure', action)
             return{
                 ...state,
                 isFetching: false,

@@ -11,3 +11,10 @@ export const fetchFacts = () => dispatch => {
         .catch(err => dispatch({ type: FETCH_FAILURE, payload: err.data}))
 }
 
+export const fetchBrewery = (id) => dispatch => {
+    dispatch({ type: START_FETCHING })
+    axios.get(`https://api.openbrewerydb.org/breweries/${id}`)
+        .then(res => dispatch({ type: FETCH_SUCCESS, payload: res.data}))
+        .catch(err => dispatch({ type: FETCH_FAILURE, payload: err.data}))
+}
+

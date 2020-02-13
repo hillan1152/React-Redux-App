@@ -1,46 +1,36 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import { useHistory } from 'react-router-dom'
+// ACTIONS
+import { fetchBrewery } from '../actions';
 
-// Components
-import BarFacts from './BarFacts';
-// Actions
-import { fetchFacts } from '../actions';
+function BarCard(props) {
+    console.log('Bar Card', props)
 
-const BarDiv = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-    justify-content: center;
-`
+    const barId = props.match.params.id;
 
-const BarCard = props => {
-    console.log("BarCard Props", props)
     useEffect(() => {
-        props.fetchFacts();
-    }, []);
+        props.fetchBrewery(barId)
+    }, [barId])
 
-
-    if (props.isFetching){
-        return <h2>Loading your favorite Bars...</h2>
-    } 
-    return(
-        <BarDiv>
-            {props.error && <p>{props.error}</p>}
-            {props.barFacts.map(fact => 
-                <BarFacts key={fact.id} fact={fact}/>
-            )}
-            <button>Checkout Brewery</button>
-        </BarDiv>
+    return (
+        <div>
+            <h2>{props.barFacts.name}</h2>
+            <h4>Type of Brewery: {props.barFacts.brewery_type}</h4>
+            <p>City: {props.barFacts.city}</p>
+            <span>State: {props.barFacts.state}</span>
+            <p>Website: {props.barFacts.website_url}</p>
+        </div>
     )
 }
 
 const mapStateToProps = state => {
-    return{
+    // console.log('MSTP Facts', state)
+    return {
         barFacts: state.barFacts,
         isFetching: state.isFetching,
         error: state.error
     }
 }
 
-export default connect(mapStateToProps, {fetchFacts})(BarCard);
+export default connect(mapStateToProps, { fetchBrewery })(BarCard);
