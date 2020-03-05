@@ -1,4 +1,4 @@
-import { START_FETCHING, FETCH_SUCCESS, FETCH_FAILURE } from '../actions';
+import { START_FETCHING, FETCH_SUCCESS, FETCH_FAILURE, FETCH_SINGLE_SUCCESS } from '../actions';
 
 const initialState = {
     barFacts: [],
@@ -16,7 +16,15 @@ const reducer = (state = initialState, action) => {
                 error: ''
             }
         case FETCH_SUCCESS:
-            // console.log('fetch success', action)
+            console.log('fetch success', action)
+            return{
+                ...state,
+                isFetching: false,
+                error: '',
+                barFacts: action.payload
+            }
+        case FETCH_SINGLE_SUCCESS:
+            console.log('fetch success', action)
             return{
                 ...state,
                 isFetching: false,

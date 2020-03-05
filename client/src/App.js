@@ -9,14 +9,13 @@ import BarList from './components/BarList';
 import BarCard from './components/BarCard';
 
 
-function App() {
+function App(props) {
 
-//   if (props.isFetching){
-//     return <h2>Loading your favorite Bars...</h2>
-// } 
+  if (props.barFacts.isFetching === true){
+    return <h2>Loading your favorite Bars...</h2>
+  }
 
   return (
-
     <div className="App">
       <h1>Open Brewery</h1>
       <Route exact path='/' component={BarList} />
