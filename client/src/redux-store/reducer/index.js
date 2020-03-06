@@ -2,6 +2,7 @@ import { START_FETCHING, FETCH_SUCCESS, FETCH_FAILURE, FETCH_SINGLE_SUCCESS } fr
 
 const initialState = {
     barFacts: [],
+    // searchBar: [],
     isFetching: false, // Same thing as loading
     error: null
 }
@@ -24,7 +25,7 @@ const reducer = (state = initialState, action) => {
                 barFacts: action.payload
             }
         case FETCH_SINGLE_SUCCESS:
-            console.log('fetch success', action)
+            console.log('fetch single success', action)
             return{
                 ...state,
                 isFetching: false,

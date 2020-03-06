@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 // ACTIONS
-import { fetchBrewery } from '../actions';
+import { fetchBrewery } from '../redux-store/actions';
 
 function BarCard(props) {
     // console.log('Bar Card', props)
@@ -26,9 +26,9 @@ function BarCard(props) {
     return (
         <div>
             <h2>{bar.name}</h2>
-            <h4>Type of Brewery: {bar.brewery_type}</h4>
             <p>City: {bar.city}</p>
             <span>State: {bar.state}</span>
+            <h4>Type of Brewery: {bar.brewery_type}</h4>
             <p>Website: {bar.website_url}</p>
         </div>
     )

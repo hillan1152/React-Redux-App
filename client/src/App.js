@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route } from "react-router-dom";
 
-import './App.css';
-
 //Components
 import BarList from './components/BarList';
 import BarCard from './components/BarCard';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+
 
 
 function App(props) {
@@ -17,9 +18,10 @@ function App(props) {
 
   return (
     <div className="App">
-      <h1>Open Brewery</h1>
+      <Nav/>
       <Route exact path='/' component={BarList} />
       <Route exact path='/Bar/:id' component={BarCard} />
+      <Footer/>
     </div>
   );
 }
