@@ -16,16 +16,23 @@ export const fetchFacts = () => dispatch => {
 }
 
 export const fetchBreweryCity = (city) => dispatch => {
-    console.log('Fetched Brewery By City', city)
+    // console.log('Fetched Brewery By City', city)
     dispatch({ type: START_FETCHING })
     axios.get(`${API_URL}?by_city=${city}`)
         .then(res => dispatch({ type: FETCH_SINGLE_SUCCESS, payload: res.data}))
         .catch(err => dispatch({ type: FETCH_FAILURE, payload: err.data}))
 }
 export const fetchBreweryState = (state) => dispatch => {
-    console.log('Fetched Brewery By State', state)
+    // console.log('Fetched Brewery By State', state)
     dispatch({ type: START_FETCHING })
     axios.get(`${API_URL}?by_state=${state}`)
+        .then(res => dispatch({ type: FETCH_SINGLE_SUCCESS, payload: res.data}))
+        .catch(err => dispatch({ type: FETCH_FAILURE, payload: err.data}))
+}
+export const searchByQuery = (query) => dispatch => {
+    console.log('Searched by query', query)
+    dispatch({ type: START_FETCHING })
+    axios.get(`${API_URL}/search?query=${query}`)
         .then(res => dispatch({ type: FETCH_SINGLE_SUCCESS, payload: res.data}))
         .catch(err => dispatch({ type: FETCH_FAILURE, payload: err.data}))
 }

@@ -3,18 +3,17 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Input } from 'antd';
 import 'antd/dist/antd.css';
+import LoadingOverlay from 'react-loading-overlay';
+import styled from 'styled-components';
 // Components
 import BarFacts from './BarFacts';
 // Actions
 import { fetchFacts, fetchBreweryCity, fetchBreweryState } from '../redux-store/actions';
 
 
-
-
-
 const BarList = props => {   
-    // console.log('ARRIVED TO BARLIST', props)
     const { Search } = Input;
+    const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState({
         city: '',
         name: '',
@@ -22,41 +21,85 @@ const BarList = props => {
         postal: '',
         type: ''
     });
-    const [cityBar, setCityBar] = useState([]);
+    const searchArray = [];
 
+    useEffect(() => {
+        props.fetchFacts()
+        // console.log("payload", barFacts)
+    }, [])
+
+    // console.log('ARRIVED TO BARLIST', props.barFacts)
+    // console.log('Is Open', isOpen)
+    // const cities = props.barFacts
+    searchArray.push(...props.barFacts)
+    console.log("Search Array", searchArray)
 
     const handleChange = e => {
-        setSearch({ ...search, [e.target.name]: e.target.value ? e.target.value : '' });
+        setSearch({ ...search, [e.target.name]: e.target.value ? e.target.value : '' })
+        // console.log("this is search", search)
     };
+
+    const allBars = props.barFacts;
+
+    // const findMatches = (wordToMatch, searchArray) => {
+    //     console.log(searchArray)
+    //     return searchArray.filter(place => {
+    //         // figure out if city matches what is searched
+    //         const regex = new RegExp(wordToMatch, 'gi');
+    //         console.log(place)
+    //         return place.city.match(regex) || place.state.match(regex)
+    //     })
+    // };
+    // findMatches("san diego")
 
     const handleSubmit = e => {
-        console.log('State', search.city);
         // e.preventDefault();
+        console.log('city', search.city);
         props.fetchBreweryCity(search.city);
+
+        if (search.city.length === 0){
+            setIsOpen(false)
+        } else {
+            setIsOpen(true)
+        };
     };
 
+    const BarList = () => {
+        return <main className="bar-list"> 
+            {props.barFacts.map(fact => 
+                <BarFacts key={fact.id} fact={fact}/>
+            )}
+        </main>
+    }
+
     if (props.isFetching){
-        return <h2>Loading your favorite Bars...</h2>
+        return <StyledLoader active={props.isFetching} spinner text='Loading Your Bars'/>
     };
+
     return(
         <div className="barlist-container">
             <div className="barlist-top">
-                <h1>Welcome to Brew Hunter</h1>
+                <h1>Welcome to Brew Spot</h1>
                 <p>Your one stop shop to discovering breweries within your city!</p>
-                <p>Go Ahead and tap search to test us out!</p>
+                <p>Go Ahead and test us out!</p>
+                <h3>Search Your City</h3>
                 <section className="search-container">
-                    <h3>Search Your City</h3>
-                    <form className="search-form" onSubmit={handleSubmit}>
-                            <Search className="search" placeholder="Search a City" enterButton="Discover" size="medium" onSearch={e => {props.fetchBreweryCity(e)}}/>
+                    <form className="search-form" onSubmit={handleSubmit} >
+                        <div>
+                            <input type="text" className="search" placeholder="City or State" onChange={handleChange} name="city"/>
+                            <button>Submit</button>
+                        </div>
+                        <ul className="suggestions">
+                            <li>Filter for City</li>
+                            {/* <li>or a state</li> */}
+                        </ul>
                     </form>
                 </section>
                 {/* <h2 className="arrow">DOWN ARROW</h2> */}
             </div>
-            <main className="bar-list"> 
-                {props.barFacts.map(fact => 
-                    <BarFacts key={fact.id} fact={fact}/>
-                )}
-            </main>
+            <div>
+                {(isOpen && <BarList/> || null)}
+            </div>
         </div>
     )
 }
@@ -70,13 +113,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchFacts, fetchBreweryCity, fetchBreweryState })(BarList);
+export default connect(mapStateToProps, { fetchFacts, fetchBreweryCity })(BarList);
 
 // // #region STYLE
-// const BarDiv = styled.div`
-//     display: flex;
-//     flex-flow: row wrap;
-//     width: 100%;
-//     justify-content: center;
-// `
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+    z-index: 2;
+`;
 // // #endregion

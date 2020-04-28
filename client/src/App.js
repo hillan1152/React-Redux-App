@@ -7,6 +7,7 @@ import BarList from './components/BarList';
 import BarCard from './components/BarCard';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import About from './components/About';
 
 
 
@@ -19,8 +20,9 @@ function App(props) {
   return (
     <div className="App">
       <Nav/>
-      <Route exact path='/' component={BarList} />
-      <Route exact path='/Bar/:id' component={BarCard} />
+        <Route exact path='/' component={BarList} />
+        <Route exact path='/Bar/:id' component={BarCard} />
+        <Route exact path='/about' component={About} />
       <Footer/>
     </div>
   );

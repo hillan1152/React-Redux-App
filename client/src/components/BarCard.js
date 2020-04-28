@@ -8,6 +8,7 @@ import { fetchBrewery } from '../redux-store/actions';
 function BarCard(props) {
     // console.log('Bar Card', props)
     const [bar, setBar] = useState([])
+    const [client, setClient] = useState(false);
 
     const barId = props.match.params.id;
 
@@ -24,12 +25,14 @@ function BarCard(props) {
     }, []);
 
     return (
-        <div>
+        <div className="barcard-page">
             <h2>{bar.name}</h2>
-            <p>City: {bar.city}</p>
-            <span>State: {bar.state}</span>
-            <h4>Type of Brewery: {bar.brewery_type}</h4>
-            <p>Website: {bar.website_url}</p>
+            <p>{bar.city}, {bar.state}, {bar.postal_code}</p>
+            <p>{bar.country}</p>
+            <p>Type of Brewery: {bar.brewery_type}</p>
+            <p>Contact: {bar.phone}</p>
+            <p>{bar.website_url}</p>
+            <p>Last Updated: {bar.updated_at}</p>
         </div>
     )
 }
