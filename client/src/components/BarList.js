@@ -17,11 +17,11 @@ const BarList = props => {
     const searchArray = [];
 
     // gather all bars, so we can bring them up in the search bar
-    useEffect(() => {
-        props.fetchFacts()
+    // useEffect(() => {
+    //     props.fetchFacts()
         
-        // console.log("payload", barFacts)
-    }, [])
+    //     // console.log("payload", barFacts)
+    // }, [])
 
     // console.log('ARRIVED TO BARLIST', props.barFacts)
     // console.log('Is Open', isOpen)
@@ -70,17 +70,20 @@ const BarList = props => {
         const find = search.search
         console.log("something", find)
         // console.log('city', search.city);
-        // console.log("city null", props.fetchBreweryCity(search.city));
+        console.log("city null", props.fetchBreweryCity(find));
         if(props.fetchBreweryCity(find) === undefined || props.fetchBreweryState(find) !== undefined){
+            console.log("Brewery STATE")
             props.fetchBreweryState(find)
-        } else if (props.fetchBreweryCity(find)){
+            setIsOpen(true)
+        } else if (props.fetchBreweryCity(find) !== undefined){
+            console.log("Brewery CITY")
             props.fetchBreweryCity(find)
+            setIsOpen(true)
         }
-        setIsOpen(true)
-
     };
 
     const BarList = () => {
+        console.log("bar facts", props.barFacts)
         return <main className="bar-list"> 
             {props.barFacts.map(fact => 
                 <BarFacts key={fact.id} fact={fact}/>
