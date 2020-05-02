@@ -1,4 +1,4 @@
-import { START_FETCHING, FETCH_SUCCESS, FETCH_FAILURE, FETCH_SINGLE_SUCCESS } from '../actions';
+import { START_FETCHING, FETCH_SUCCESS, FETCH_FAILURE, FETCH_SINGLE_SUCCESS} from '../actions';
 
 const initialState = {
     barFacts: [],
@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 isFetching: false,
-                error: '',
+                error: 'Successful connection, but request is not a city or a state',
                 barFacts: action.payload
             }
         case FETCH_SINGLE_SUCCESS:
@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) => {
                 error: '',
                 barFacts: action.payload
             }
+
         case FETCH_FAILURE:
             // console.log('fetch failure', action)
             return{

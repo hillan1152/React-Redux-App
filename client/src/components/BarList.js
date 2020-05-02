@@ -12,19 +12,14 @@ import { fetchFacts, fetchBreweryCity, fetchBreweryState } from '../redux-store/
 
 
 const BarList = props => {   
-    const { Search } = Input;
     const [isOpen, setIsOpen] = useState(false);
-    const [search, setSearch] = useState({
-        city: '',
-        name: '',
-        state: '',
-        postal: '',
-        type: ''
-    });
+    const [search, setSearch] = useState('');
     const searchArray = [];
 
+    // gather all bars, so we can bring them up in the search bar
     useEffect(() => {
         props.fetchFacts()
+        
         // console.log("payload", barFacts)
     }, [])
 
@@ -32,36 +27,57 @@ const BarList = props => {
     // console.log('Is Open', isOpen)
     // const cities = props.barFacts
     searchArray.push(...props.barFacts)
-    console.log("Search Array", searchArray)
 
     const handleChange = e => {
         setSearch({ ...search, [e.target.name]: e.target.value ? e.target.value : '' })
-        // console.log("this is search", search)
     };
 
-    const allBars = props.barFacts;
+
+    // console.log("search", search)
+    // const allBars = props.barFacts;
 
     // const findMatches = (wordToMatch, searchArray) => {
     //     console.log(searchArray)
     //     return searchArray.filter(place => {
     //         // figure out if city matches what is searched
     //         const regex = new RegExp(wordToMatch, 'gi');
-    //         console.log(place)
-    //         return place.city.match(regex) || place.state.match(regex)
+            
+    //         console.log("MATCH IT -->", place.city.match(regex))
+    //         // return place.city.match(regex) || place.state.match(regex)
+    //         return place.city.match(regex) 
     //     })
     // };
-    // findMatches("san diego")
+
+    // const displayMatches = () => {
+    //     const matchArray = findMatches(this.value, searchArray);
+    //     const html = matchArray.map(place => {
+    //         const regex = new RegExp(this.value, 'gi');
+    //         const cityName = place.city.replace(regex, `<span className="hl">${this.value}</span>`)
+    //         return `
+    //         <li>
+    //             <span class="name">${cityName}</span>
+    //             <span class="population">${place.name}</span>
+    //         <li>
+    //         `;
+    //     }).join('')
+    //     suggestions.innerHTML = html
+    // }
+
+    // findMatches("san diego", allBars)
 
     const handleSubmit = e => {
         // e.preventDefault();
-        console.log('city', search.city);
-        props.fetchBreweryCity(search.city);
+        const find = search.search
+        console.log("something", find)
+        // console.log('city', search.city);
+        // console.log("city null", props.fetchBreweryCity(search.city));
+        if(props.fetchBreweryCity(find) === undefined || props.fetchBreweryState(find) !== undefined){
+            props.fetchBreweryState(find)
+        } else if (props.fetchBreweryCity(find)){
+            props.fetchBreweryCity(find)
+        }
+        setIsOpen(true)
 
-        if (search.city.length === 0){
-            setIsOpen(false)
-        } else {
-            setIsOpen(true)
-        };
     };
 
     const BarList = () => {
@@ -70,11 +86,12 @@ const BarList = props => {
                 <BarFacts key={fact.id} fact={fact}/>
             )}
         </main>
-    }
+    };
 
     if (props.isFetching){
         return <StyledLoader active={props.isFetching} spinner text='Loading Your Bars'/>
     };
+
 
     return(
         <div className="barlist-container">
@@ -86,13 +103,14 @@ const BarList = props => {
                 <section className="search-container">
                     <form className="search-form" onSubmit={handleSubmit} >
                         <div>
-                            <input type="text" className="search" placeholder="City or State" onChange={handleChange} name="city"/>
-                            <button>Submit</button>
+                            <input type="text" className="search" placeholder="City or State" onChange={handleChange} name='search'/>
+                            <button type="submit">Submit</button>
                         </div>
-                        <ul className="suggestions">
+                        {/* <ul className="suggestions">
+                            
                             <li>Filter for City</li>
-                            {/* <li>or a state</li> */}
-                        </ul>
+                            <li>or a state</li>
+                        </ul> */}
                     </form>
                 </section>
                 {/* <h2 className="arrow">DOWN ARROW</h2> */}
@@ -102,7 +120,7 @@ const BarList = props => {
             </div>
         </div>
     )
-}
+};
 
 const mapStateToProps = state => {
     // console.log('MSTP BAR LIST', state)
@@ -113,7 +131,7 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchFacts, fetchBreweryCity })(BarList);
+export default connect(mapStateToProps, { fetchFacts, fetchBreweryCity, fetchBreweryState })(BarList);
 
 // // #region STYLE
 const StyledLoader = styled(LoadingOverlay)`
