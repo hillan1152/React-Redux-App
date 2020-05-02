@@ -1,0 +1,41 @@
+// less-watch-compiler src/less public/css index.less
+@import "./search.less";
+@import "./global.less";
+@import "./barlist.less";
+@import "./variables.less";
+@import "./nav.less";
+@import "./barfacts.less";
+@import "./footer.less";
+@import "./barcard.less";
+
+.App {
+	text-align: center;
+	background-color: rgb(151, 146, 146);
+	height: 100vh;
+	width: 100vw;
+	h1 {
+		color: white;
+		font-family: @main-font;
+	}
+}
+html {
+	background-color: rgb(151, 146, 146);
+}
+body {
+	// background: url(../images/beer.jpg) no-repeat center center fixed;
+	// background-size: cover;
+	// background-repeat: no-repeat;
+	background-color: rgb(151, 146, 146);
+	background-size: cover;
+}
+
+// body::after {
+//     background: url(../images/beer.jpg);
+//     opacity: .5;
+//     top: 0;
+//     left: 0;
+//     bottom: 0;
+//     right: 0;
+//     position: absolute;
+//     z-index: -1;
+// }
