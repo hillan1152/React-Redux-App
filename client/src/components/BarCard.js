@@ -20,9 +20,9 @@ function BarCard(props) {
                 setBar(singleBar)
             })
             .catch(err => {
-                console.log("This Didn't Work")
+                alert(err.error)
             })
-    }, []);
+    }, [barId]);
 
     return (
         <div className="barcard-page">
