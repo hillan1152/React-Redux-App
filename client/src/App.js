@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route } from "react-router-dom";
+import './less/index.less'
 
 //Components
 import BarList from './components/BarList';
