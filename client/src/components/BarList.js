@@ -54,7 +54,7 @@ const BarList = props => {
                 <h1>Welcome to Brew Spot</h1>
                 <p>Your one stop shop to discovering breweries within your city!</p>
                 <p>Go Ahead and test us out!</p>
-                <h3>Search Your City</h3>
+                <h3>Search Your City or State</h3>
                 <section className="search-container">
                     <form className="search-form" onSubmit={handleSubmit} >
                         <div>
