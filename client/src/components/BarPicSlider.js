@@ -21,10 +21,8 @@ export default function BarPicSlider() {
         
     }, [])
     const next = () => whirligig.next();
-    // const prev = () => whirligig.prev();
     return (
         <div>
-            {/* <button onClick={prev}>Prev</button> */}
             <Whirligig
                 visibleSlides={1}
                 gutter="1em"
