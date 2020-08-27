@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
-// ACTIONS
-import { fetchBrewery } from '../redux-store/actions';
 
 function BarCard(props) {
-    // console.log('Bar Card', props)
     const [bar, setBar] = useState([])
 
     const barId = props.match.params.id;
@@ -32,13 +29,7 @@ function BarCard(props) {
                     <h3>Facts</h3>
                     <p>Type of Brewery: {bar.brewery_type}</p>
                     <p>Contact: {bar.phone}</p>
-                    {(() => {
-                            if(!bar.website_url){
-                                // console.log('none')
-                            } else {
-                            return <a href={bar.website_url}><Button type="primary">Website</Button></a>
-                            }
-                        })()}
+                    {bar.website_url && <a href={bar.website_url}><Button type="primary">Website</Button></a>}
                     <p>Last Updated: {bar.updated_at}</p>
                 </div>
                 <div>
@@ -52,7 +43,6 @@ function BarCard(props) {
 }
 
 const mapStateToProps = state => {
-    console.log('MSTP BAR CARD', state)
     return {
         barFacts: state.barFacts,
         isFetching: state.isFetching,
